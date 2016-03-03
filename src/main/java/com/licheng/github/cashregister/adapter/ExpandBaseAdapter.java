@@ -92,11 +92,6 @@ public class ExpandBaseAdapter extends BaseExpandableListAdapter {
         }
         TextView title = (TextView) view.findViewById(R.id.groupText);
         title.setText(getGroup(groupPosition).toString());
-        ImageView image = (ImageView) view.findViewById(R.id.groupBox);
-        if (isExpanded)
-            image.setBackgroundResource(R.drawable.groupdown);
-        else
-            image.setBackgroundResource(R.drawable.groupleft);
 
         return view;
     }

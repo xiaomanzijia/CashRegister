@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CommodityDB db;
 
+    private MyDialogFragment dialogFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +63,23 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String[] inputs = new String[commodityInputs.size()];
+                for (int i = 0; i < commodityInputs.size(); i++) {
+                    inputs[i] = commodityInputs.get(i);
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pricelist",calulate(inputs));
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(getFragmentManager(),"pricelist");
+                //扔进计算仓库计算
+//                Toast.makeText(getApplicationContext(),calulate(inputs),Toast.LENGTH_SHORT).show();
+//                Snackbar.make(view, calulate(inputs), Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
+
+        dialogFragment = new MyDialogFragment();
 
         db = new CommodityDB(getApplicationContext());
         //清空商品库
@@ -278,8 +293,8 @@ public class MainActivity extends AppCompatActivity {
                 //"买二赠一"价格计算
                 double price2 = buytwogiveoneDiscount.calculate(toCalculateList.getCommodityBeanList().get(i));
                 price += price2;
-//                buytwo.add(toCalculateList.getCommodityBeanList().get(i));
-//                ninefive.add(toCalculateList.getCommodityBeanList().get(i));
+                buytwo.add(toCalculateList.getCommodityBeanList().get(i));
+                ninefive.add(toCalculateList.getCommodityBeanList().get(i));
                 sb.append("名称:"+name+",数量:"+count+",单价:"+price1+"(元),小计:"+String.valueOf(price2)+"(元)\n");
             }else if(buytwogiveoneDiscount.containCommodity(barcode)){
                 //"买二赠一"价格计算
