@@ -12,14 +12,8 @@ public class BuyTwoGiveOne implements Discount{
     //“买二赠一”优惠商品存储仓库
     private List<CommodityBean> mWarehouse = new ArrayList<>();
 
-
-    public List<CommodityBean> getWarehouse() {
-        return mWarehouse;
-    }
-
-    public void setWarehouse(List<CommodityBean> warehouse) {
-        this.mWarehouse = warehouse;
-
+    public void setmWarehouse(List<CommodityBean> mWarehouse) {
+        this.mWarehouse = mWarehouse;
     }
 
     public BuyTwoGiveOne() {
@@ -27,27 +21,23 @@ public class BuyTwoGiveOne implements Discount{
         mWarehouse.add(new CommodityBean("ITEM000004"));
     }
 
+
     private String mBarcode;
 
-    //TODO:每买2个商品赠送1个商品  算法有误
+    //TODO:每买2个商品赠送1个商品
     @Override
-    public double calculate(List<CommodityBean> commodityList) {
+    public double calculate(CommodityBean commodity) {
         double commodityPriceCount = 0.0;
-        if(containCommodity(mBarcode)){
-            for (int i = 0; i < commodityList.size(); i++) {
-                //只计算“买二赠一”的条形码
-                if(mBarcode.equals(commodityList.get(i).getCommodityBarcode())){
-                    double commodityPrice = Double.valueOf(commodityList.get(i).getCommodityPrice());
-                    double commodityCount = Double.valueOf(commodityList.get(i).getCommodityCount());
-                    int a = (int) (commodityCount / 2);
-                    if(commodityCount % 2 == 0){
-                        commodityPriceCount = (a - 1) * 2 * commodityPrice;
-                    }else {
-                        commodityPriceCount = a * 2 * commodityPrice;
-                    }
-                }
-            }
+        double commodityPrice = Double.valueOf(commodity.getCommodityPrice());
+        double commodityCount = Double.valueOf(commodity.getCommodityCount());
+        int a = (int) (commodityCount * 2);
+        int b = 0;
+        if(a % 3 == 0){
+            b = a / 3;
+        }else {
+            b = a / 3 + 1;
         }
+        commodityPriceCount = b * commodityPrice;
         return commodityPriceCount;
     }
 

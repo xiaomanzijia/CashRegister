@@ -24,6 +24,12 @@ public class CommodityBean {
     public CommodityBean() {
     }
 
+    public CommodityBean(String commodityName, String commodityPrice, String commodityBarcode) {
+        this.commodityName = commodityName;
+        this.commodityPrice = commodityPrice;
+        this.commodityBarcode = commodityBarcode;
+    }
+
     public CommodityBean(String commodityBarcode) {
         this.commodityBarcode = commodityBarcode;
     }

@@ -13,35 +13,23 @@ public class NineFiveDiscount implements Discount {
     //“95折”优惠商品存储仓库
     private List<CommodityBean> mWarehouse = new ArrayList<>();
 
-    public List<CommodityBean> getWarehouse() {
-        return mWarehouse;
-    }
-
-    public void setWarehouse(List<CommodityBean> warehouse) {
-        this.mWarehouse = warehouse;
-
-    }
-
     public NineFiveDiscount() {
         mWarehouse.add(new CommodityBean("ITEM000001"));
         mWarehouse.add(new CommodityBean("ITEM000003"));
     }
 
+    public void setmWarehouse(List<CommodityBean> mWarehouse) {
+        this.mWarehouse = mWarehouse;
+    }
+
     private String mBarcode;
 
     @Override
-    public double calculate(List<CommodityBean> commodityList) {
+    public double calculate(CommodityBean commodity) {
         double commodityPriceCount = 0.0;
-        if(containCommodity(mBarcode)){
-            for (int i = 0; i < commodityList.size(); i++) {
-                //只计算“95折”的条形码
-                if(mBarcode.equals(commodityList.get(i).getCommodityBarcode())){
-                    double commodityPrice = Double.valueOf(commodityList.get(i).getCommodityPrice());
-                    double commodityCount = Double.valueOf(commodityList.get(i).getCommodityCount());
-                    commodityPriceCount = commodityCount * commodityPrice * 0.95;
-                }
-            }
-        }
+        double commodityPrice = Double.valueOf(commodity.getCommodityPrice());
+        double commodityCount = Double.valueOf(commodity.getCommodityCount());
+        commodityPriceCount = commodityCount * commodityPrice * 0.95;
         return commodityPriceCount;
     }
 
